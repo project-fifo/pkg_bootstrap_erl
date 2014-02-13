@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+CMD="/opt/local/your_stuff/bin/your_stuff"
+
+${CMD} start &
