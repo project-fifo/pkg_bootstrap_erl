@@ -3,7 +3,7 @@ include ../../project.mk
 .PHONY: build_info package package_list
 
 stage:
-	cp ../$(PROJECT) staging
+	cp -r ../$(PROJECT) staging
 
 package_list: stage
 	cat pre_pkg > packlist
