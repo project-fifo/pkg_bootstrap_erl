@@ -51,6 +51,5 @@ init-pkg: check-appid
 uninit:
 	-rm -rf apps
 	-(cd rel; rm -rf files $(RELFILES))
-	-rm $(STAGEDIR)/sbin/$(appid)
-	-rm $(STAGEDIR)/install.sh
+	-rm -r $(STAGEDIR)
 	-rm share/$(appid).xml
