@@ -18,8 +18,11 @@ clean:
 	make -C rel/pkg clean
 
 rel: compile-no-deps
-	-rm -r rel/$(PROJECT)/share
+	[ -d rel/$(PROJECT)/share ] && rm -r rel/$(PROJECT)/share || true
 	$(REBAR) generate
+
+package: rel
+	make -C rel/pkg
 
 init: check-appid init-app init-rel init-pkg
 	echo 'PROJECT = $(appid)' >> project.mk

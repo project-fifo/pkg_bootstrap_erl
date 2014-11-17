@@ -24,7 +24,7 @@
 #  wholesale when a new version of tools.mk is released.
 #  -------------------------------------------------------------------
 
-REBAR ?= ./rebar
+REBAR ?= $(shell pwd)/rebar
 REVISION ?= $(shell git rev-parse --short HEAD)
 PROJECT ?= $(shell basename `find src -name "*.app.src"` .app.src)
 
