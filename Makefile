@@ -13,6 +13,14 @@ compile:
 deps:
 	$(REBAR) get-deps
 
+clean:
+	$(REBAR) clean
+	make -C rel/pkg clean
+
+rel: compile-no-deps
+	-rm -r rel/$(PROJECT)/share
+	$(REBAR) generate
+
 init: check-appid init-app init-rel init-pkg
 	echo 'PROJECT = "$(appid)"' >> project.mk
 
@@ -22,7 +30,7 @@ check-appid:
 
 init-app:
 	mkdir -p apps/$(appid)
-	(cd apps/$(appid); ../../rebar create-app appid=$(appid))
+	(cd apps/$(appid); $(REBAR) create-app appid=$(appid))
 
 init-rel: check-appid init-rel-generate init-rel-templates
 	rm rel/files/sys.config
@@ -32,7 +40,7 @@ init-rel: check-appid init-rel-generate init-rel-templates
 	sed 's/APPID/$(appid)/g' templates/schema > schema/$(appid).schema
 
 init-rel-generate:
-	(cd rel; ../rebar create-node nodeid=$(appid))
+	(cd rel; $(REBAR) create-node nodeid=$(appid))
 
 init-rel-templates:
 	for file in $(RELFILES);\
@@ -49,7 +57,9 @@ init-pkg: check-appid
 	sed 's/APPID/$(appid)/g' templates/smf.xml > share/$(appid).xml
 
 uninit:
-	-rm -rf apps
+	-rm -r apps
 	-(cd rel; rm -rf files $(RELFILES))
 	-rm -r $(STAGEDIR)
-	-rm share/$(appid).xml
+	-rm share
+	-rm schema/$(PROJECT).schema
+	-[ "$(PROJECT)x" != "x" ] && rm -r rel/$(PROJECT)
