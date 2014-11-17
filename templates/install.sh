@@ -21,6 +21,9 @@ case $2 in
             echo Creating $USER user ...
             useradd -g $GROUP -d /var/db/$SERVICE -s /bin/false $USER
         fi
+        mkdir /var/log/$SERVICE
+        mkdir /var/db/$SERVICE
+        chown $USER:$GROUP /var/log/$SERVICE /var/db/$SERVICE
         ;;
     POST-INSTALL)
         echo Importing service ...
