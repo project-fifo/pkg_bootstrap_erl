@@ -24,7 +24,7 @@ case $2 in
         ;;
     POST-INSTALL)
         echo Importing service ...
-        svccfg import /opt/local/$SERVIRE/share/$SERVIRE.xml
+        svccfg import /opt/local/$SERVICE/share/$SERVICE.xml
         echo Could put stuff in here to copy files to places
         echo or do whatever tasks are needed post installation
         ;;
