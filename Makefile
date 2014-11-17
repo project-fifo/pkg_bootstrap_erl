@@ -2,7 +2,8 @@ include project.mk
 include tools.mk
 
 RELFILES = reltool.config rebar.config vars.config
-STAGEDIR = rel/pkg/staging
+PKGDIR = rel/pkg
+STAGEDIR = $(PKGDIR)/staging
 
 .PHONY: deps templates
 
@@ -22,7 +23,7 @@ rel: compile-no-deps
 	$(REBAR) generate
 
 package: rel
-	make -C rel/pkg
+	make -C rel/pkg package
 
 init: check-appid init-app init-rel init-pkg
 	echo 'PROJECT = $(appid)' >> project.mk
@@ -55,7 +56,7 @@ init-rel-templates:
 init-pkg: check-appid
 	mkdir -p $(STAGEDIR)/sbin
 	sed 's/APPID/$(appid)/g' templates/executable > $(STAGEDIR)/sbin/$(appid)
-	sed 's/APPID/$(appid)/g' templates/install.sh > $(STAGEDIR)/install.sh
+	sed 's/APPID/$(appid)/g' templates/install.sh > $(PKGDIR)/install.sh
 	mkdir share
 	sed 's/APPID/$(appid)/g' templates/smf.xml > share/$(appid).xml
 
