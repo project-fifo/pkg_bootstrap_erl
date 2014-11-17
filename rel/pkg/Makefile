@@ -1,6 +1,9 @@
 include ../../project.mk
 
-.PHONY: build_info package package_list
+.PHONY: build_info package_list
+
+package: package_list build_info
+	pkg_create -i install.sh -k deinstall.sh -D displayfile -B build-info -c comment -d description -f packlist -I /opt/local/ -p ../staging -U $(PROJECT)-$(VERSION)$(SUFFIX).tgz
 
 stage:
 	cp -r ../$(PROJECT) staging
@@ -18,5 +21,3 @@ build_info:
 clean:
 	-rm *.tgz build-info packlist
 
-package: package_list build_info
-	pkg_create -i install.sh -k deinstall.sh -D displayfile -B build-info -c comment -d description -f packlist -I /opt/local/ -p ../staging -U $(PROJECT)-$(VERSION)$(SUFFIX).tgz
