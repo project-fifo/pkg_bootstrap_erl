@@ -22,7 +22,7 @@ rel: compile-no-deps
 	$(REBAR) generate
 
 init: check-appid init-app init-rel init-pkg
-	echo 'PROJECT = "$(appid)"' >> project.mk
+	echo 'PROJECT = $(appid)' >> project.mk
 
 
 check-appid:
@@ -60,6 +60,6 @@ uninit:
 	-rm -r apps
 	-(cd rel; rm -rf files $(RELFILES))
 	-rm -r $(STAGEDIR)
-	-rm share
+	-rm -r share
 	-rm schema/$(PROJECT).schema
-	-[ "$(PROJECT)x" != "x" ] && rm -r rel/$(PROJECT)
+	-[ '$(PROJECT)x' != "x" ] && rm -r rel/$(PROJECT)
