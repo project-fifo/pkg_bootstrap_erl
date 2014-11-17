@@ -1,19 +1,11 @@
 #!/usr/bin/bash
 
-USER=cool_stuff
+USER=APPID
 GROUP=$USER
 SERVICE=$USER
 
 case $2 in
     PRE-INSTALL)
-        #Check on image version if required
-        if grep '^Image: base64 13.[23].*$' /etc/product
-	then
-	    echo "Image version supported"
-	else
-	    echo "This image version is not supported please use the base64 13.2.1 image."
-	    exit 1
-        fi
         #Create group and user if required!
         if grep "^$GROUP:" /etc/group > /dev/null 2>&1
         then
@@ -32,7 +24,7 @@ case $2 in
         ;;
     POST-INSTALL)
         echo Importing service ...
-        svccfg import /opt/local/path/to/$SERVIRE.xml
+        svccfg import /opt/local/$SERVIRE/share/$SERVIRE.xml
         echo Could put stuff in here to copy files to places
         echo or do whatever tasks are needed post installation
         ;;

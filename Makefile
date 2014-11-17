@@ -29,6 +29,7 @@ init-rel: check-appid init-rel-generate init-rel-templates
 	rm rel/files/vm.args
 	rm rel/files/start_erl.cmd
 	rm rel/files/$(appid).cmd
+	sed 's/APPID/$(appid)/g' templates/schema > schema/$(appid).schema
 
 init-rel-generate:
 	(cd rel; ../rebar create-node nodeid=$(appid))
@@ -43,9 +44,13 @@ init-rel-templates:
 init-pkg: check-appid
 	mkdir -p $(STAGEDIR)/sbin
 	sed 's/APPID/$(appid)/g' templates/executable > $(STAGEDIR)/sbin/$(appid)
+	sed 's/APPID/$(appid)/g' templates/install.sh > $(STAGEDIR)/install.sh
 	mkdir share
 	sed 's/APPID/$(appid)/g' templates/smf.xml > share/$(appid).xml
 
 uninit:
 	-rm -rf apps
 	-(cd rel; rm -rf files $(RELFILES))
+	-rm $(STAGEDIR)/sbin/$(appid)
+	-rm $(STAGEDIR)/install.sh
+	-rm share/$(appid).xml
