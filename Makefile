@@ -64,6 +64,7 @@ uninit:
 	-rm -r apps
 	-(cd rel; rm -rf files $(RELFILES))
 	-rm -r $(STAGEDIR)
+	-rm $(PKGDIR)/install.sh
 	-rm -r share
 	-rm schema/$(PROJECT).schema
 	-[ '$(PROJECT)x' != "x" ] && rm -r rel/$(PROJECT)
