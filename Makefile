@@ -52,11 +52,15 @@ init-rel-templates:
 		sed 's/APPID/$(appid)/g' templates/$$file > rel/$$file;\
 	done
 	sed 's/APPID/$(appid)/g' templates/app > rel/files/$(appid)
+# We lose execution rights with sed so we need to add them again
+	chmod +x rel/files/$(appid)
 
 init-pkg: check-appid
 	mkdir -p $(STAGEDIR)/sbin
 	sed 's/APPID/$(appid)/g' templates/executable > $(STAGEDIR)/sbin/$(appid)
 	sed 's/APPID/$(appid)/g' templates/install.sh > $(PKGDIR)/install.sh
+# We lose execution rights with sed so we need to add them again
+	chmod +x $(PKGDIR)/install.sh $(STAGEDIR)/sbin/$(appid)
 	mkdir share
 	sed 's/APPID/$(appid)/g' templates/smf.xml > share/$(appid).xml
 
